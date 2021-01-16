@@ -17,6 +17,22 @@
         .mb20 {
             margin-bottom: 20px;
         }
+
+        .noselect {
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Old versions of Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+        }
     </style>
 </head>
 
@@ -55,14 +71,46 @@
 
     <div id="actions" style="display: none;">
         <b>Actions:</b>
-        <ul>
+        <ul class="noselect">
             <li id="mute-unmute" class="mb20">Mute / Unmute</li>
             <li id="increase-volume-1">Increase Volume by 1%</li>
             <li id="increase-volume-5">Increase Volume by 5%</li>
             <li id="increase-volume-10" class="mb20">Increase Volume by 10%</li>
             <li id="decrease-volume-1">Decrease Volume by 1%</li>
             <li id="decrease-volume-5">Decrease Volume by 5%</li>
-            <li id="decrease-volume-10">Decrease Volume by 10%</li>
+            <li id="decrease-volume-10" class="mb20">Decrease Volume by 10%</li>
+            <li id="mouse-click-left">Left Mouse Click</li>
+            <li id="mouse-click-middle">Middle Mouse Click</li>
+            <li id="mouse-click-right" class="mb20">Right Mouse Click</li>
+            <li id="mouse-scroll-up" class="mb20">Scroll up</li>
+            <li id="mouse-scroll-down" class="mb20">Mouse position:
+                <br/>
+                <input type="text" id="xpos" placeholder="X"/>
+                <br/>
+                <input type="text" id="ypos" placeholder="Y"/> 
+                <br/>
+                <button type="button" id="setmpos">Set</button></li>
+            <li id="alt-down">
+                Alt down
+            </li>
+            <li id="tab">
+                Tab
+            </li>
+            <li id="alt-up" class="mb20">
+                Alt up
+            </li>
+            <li id="send-key" class="mb20">
+                Send key:<br/>
+                <input type="text" id="keytosend" />
+                <br/>
+                <button type="button" id="send-key-btn">Send</button>
+            </li>
+            <li id="send-key">
+                Send CMD:<br/>
+                <input type="text" id="cmdtosend" />
+                <br/>
+                <button type="button" id="send-cmd-btn">Send</button>
+            </li>
         </ul>
     </div>
 
@@ -70,9 +118,10 @@
     <script>
 
         function req(url) {
+            var timestamp = new Date().valueOf();;
             const http = new XMLHttpRequest();
             const serverIp = document.getElementById('selected-server-ip').innerText;
-            url = 'http://' + serverIp +':3000' + url;
+            url = 'http://' + serverIp + ':3000' + url + '?t=' + timestamp;
             http.open("GET", url);
             http.send();
         }
@@ -105,7 +154,63 @@
             req('/volume/decrease/10');
         };
 
-       
+
+        document.getElementById('mouse-click-left').onclick = function () {
+            req('/mouse/click/left');
+        };
+
+        document.getElementById('mouse-click-middle').onclick = function () {
+            req('/mouse/click/middle');
+        };
+
+        document.getElementById('mouse-click-right').onclick = function () {
+            req('/mouse/click/right');
+        };
+
+        document.getElementById('mouse-scroll-up').onclick = function () {
+            req('/mouse/scroll/up');
+        };
+
+        document.getElementById('mouse-scroll-down').onclick = function () {
+            req('/mouse/scroll/down');
+        };
+
+        document.getElementById('setmpos').onclick = function () {
+            const x = document.getElementById('xpos').value;
+            const y = document.getElementById('ypos').value;
+
+            req('/mouse/x/' + x + '/y/' + y);
+        };
+
+        document.getElementById('alt-down').onclick = function () {
+            req('/alt/down');
+        };
+
+        document.getElementById('alt-up').onclick = function () {
+            req('/alt/up');
+        };
+
+        document.getElementById('tab').onclick = function () {
+            req('/tab');
+        };
+
+        document.getElementById('send-key-btn').onclick = function () {
+            const key = document.getElementById('keytosend').value;
+
+            req('/key/' + key);
+        };
+
+        document.getElementById('send-key-btn').onclick = function () {
+            const key = document.getElementById('keytosend').value;
+
+            req('/key/' + key);
+        };
+
+        document.getElementById('send-cmd-btn').onclick = function () {
+            const key = document.getElementById('cmdtosend').value;
+
+            req('/cli/' + cmd);
+        };
     </script>
 </body>
 
