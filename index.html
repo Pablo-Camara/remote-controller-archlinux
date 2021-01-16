@@ -105,7 +105,7 @@
                 <br/>
                 <button type="button" id="send-key-btn">Send</button>
             </li>
-            <li id="send-key">
+            <li>
                 Send CMD:<br/>
                 <input type="text" id="cmdtosend" />
                 <br/>
@@ -196,12 +196,6 @@
 
         document.getElementById('tab').onclick = function () {
             req('/tab');
-        };
-
-        document.getElementById('send-key-btn').onclick = function () {
-            const key = document.getElementById('keytosend').value;
-
-            req('/key/' + key);
         };
 
         document.getElementById('send-key-btn').onclick = function () {

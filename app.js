@@ -86,7 +86,7 @@ app.get('/cli/:cmd', function(req, res){
     cli(req.params.cmd);
 });
 
-app.get('kill/active-window', function(req, res){
+app.get('/kill/active-window', function(req, res){
     cli('xdotool getactivewindow | xargs xdotool windowkill');
 });
 
