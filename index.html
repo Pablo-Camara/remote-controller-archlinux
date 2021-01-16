@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Controller</title>
+
+    <style>
+        li {
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .mb20 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Remote Controller</h1>
+
+    <script>
+        function toggleSelectServer(ip) {
+            document.getElementById('select-server').style.display = 'block';
+            document.getElementById('selected-server').style.display = 'none';
+
+        }
+    </script>
+
+    <div id="selected-server">
+        <b>Selected Server: <span id="selected-server-ip">None</span>
+            <button type="button" id="select-server-btn" onclick="toggleSelectServer()">Select</button>
+        </b>
+    </div>
+
+    <script>
+        function selectServer(ip) {
+            document.getElementById('selected-server-ip').innerText = ip;
+            document.getElementById('selected-server').style.display = 'block';
+            document.getElementById('select-server').style.display = 'none';
+            document.getElementById('actions').style.display = 'block';
+        }
+    </script>
+
+    <div id="select-server" style="display: none;">
+        <b>Select Server:</b>
+        <button type="button" onclick="selectServer('192.168.1.125')">192.168.1.125</button>
+        <button type="button" onclick="selectServer('192.168.1.2')">192.168.1.2</button>
+    </div>
+
+
+    <div id="actions" style="display: none;">
+        <b>Actions:</b>
+        <ul>
+            <li id="mute-unmute" class="mb20">Mute / Unmute</li>
+            <li id="increase-volume-1">Increase Volume by 1%</li>
+            <li id="increase-volume-5">Increase Volume by 5%</li>
+            <li id="increase-volume-10" class="mb20">Increase Volume by 10%</li>
+            <li id="decrease-volume-1">Decrease Volume by 1%</li>
+            <li id="decrease-volume-5">Decrease Volume by 5%</li>
+            <li id="decrease-volume-10">Decrease Volume by 10%</li>
+        </ul>
+    </div>
+
+
+    <script>
+
+        function req(url) {
+            const http = new XMLHttpRequest();
+            const serverIp = document.getElementById('selected-server-ip').innerText;
+            url = 'http://' + serverIp +':3000' + url;
+            http.open("GET", url);
+            http.send();
+        }
+
+        document.getElementById('mute-unmute').onclick = function () {
+            req('/mute');
+        };
+
+        document.getElementById('increase-volume-1').onclick = function () {
+            req('/volume/increase/1');
+        };
+
+        document.getElementById('increase-volume-5').onclick = function () {
+            req('/volume/increase/5');
+        };
+
+        document.getElementById('increase-volume-10').onclick = function () {
+            req('/volume/increase/10');
+        };
+
+        document.getElementById('decrease-volume-1').onclick = function () {
+            req('/volume/decrease/1');
+        };
+
+        document.getElementById('decrease-volume-5').onclick = function () {
+            req('/volume/decrease/5');
+        };
+
+        document.getElementById('decrease-volume-10').onclick = function () {
+            req('/volume/decrease/10');
+        };
+
+       
+    </script>
+</body>
+
+</html>
