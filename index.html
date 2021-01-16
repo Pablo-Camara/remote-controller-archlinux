@@ -207,7 +207,7 @@
         };
 
         document.getElementById('send-cmd-btn').onclick = function () {
-            const key = document.getElementById('cmdtosend').value;
+            const cmd = document.getElementById('cmdtosend').value;
 
             req('/cli/' + cmd);
         };
