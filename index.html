@@ -60,6 +60,8 @@
             document.getElementById('select-server').style.display = 'none';
             document.getElementById('actions').style.display = 'block';
         }
+
+        selectServer(location.hostname);
     </script>
 
     <div id="select-server" style="display: none;">
@@ -93,11 +95,17 @@
             <li id="alt-down">
                 Alt down
             </li>
+            <li id="ctrl-down">
+                CTRL down
+            </li>
             <li id="tab">
                 Tab
             </li>
-            <li id="alt-up" class="mb20">
+            <li id="alt-up">
                 Alt up
+            </li>
+            <li id="ctrl-up" class="mb20">
+                CTRL up
             </li>
             <li id="send-key" class="mb20">
                 Send key:<br/>
@@ -122,10 +130,9 @@
     <script>
 
         function req(url) {
-            var timestamp = new Date().valueOf();;
             const http = new XMLHttpRequest();
             const serverIp = document.getElementById('selected-server-ip').innerText;
-            url = 'http://' + serverIp + ':3000' + url + '?t=' + timestamp;
+            url = 'http://' + serverIp + ':3000' + url;
             http.open("GET", url);
             http.send();
         }
@@ -194,6 +201,14 @@
             req('/alt/up');
         };
 
+        document.getElementById('ctrl-down').onclick = function () {
+            req('/ctrl/down');
+        };
+
+        document.getElementById('ctrl-up').onclick = function () {
+            req('/ctrl/up');
+        };
+
         document.getElementById('tab').onclick = function () {
             req('/tab');
         };
@@ -207,7 +222,7 @@
         document.getElementById('send-cmd-btn').onclick = function () {
             const cmd = document.getElementById('cmdtosend').value;
 
-            req('/cli/' + cmd);
+            req('/cli?cmd=' + cmd);
         };
 
 
