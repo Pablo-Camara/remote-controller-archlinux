@@ -86,6 +86,10 @@ app.get('/cli/:cmd', function(req, res){
     cli(req.params.cmd);
 });
 
+app.get('kill/active-window', function(req, res){
+    cli('xdotool getactivewindow | xargs xdotool windowkill');
+});
+
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });

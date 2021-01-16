@@ -111,6 +111,10 @@
                 <br/>
                 <button type="button" id="send-cmd-btn">Send</button>
             </li>
+
+            <li id="kill-window">
+                <button type="button" id="kill-window-btn">Kill active window</button>
+            </li>
         </ul>
     </div>
 
@@ -210,6 +214,11 @@
             const cmd = document.getElementById('cmdtosend').value;
 
             req('/cli/' + cmd);
+        };
+
+
+        document.getElementById('kill-window-btn').onclick = function(){
+            req('/kill/active-window');
         };
     </script>
 </body>
