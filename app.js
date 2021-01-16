@@ -33,7 +33,7 @@ app.get('/',function(req,res) {
 });
 
 app.get('/mute', function(req, res){
-    cli('pactl set-sink-mute 0 toggle');
+    cli('pactl set-sink-mute @DEFAULT_SINK@ toggle');
 });
 
 app.get('/volume/:action/:v', function(req, res){
